@@ -14,16 +14,22 @@ before_build:
   - clcache -s
 
 build_script:
-  - md build
-  - cd build
-  - cmake -G "Visual Studio 15 2017 Win64" .. -DOPENSSL_ROOT_DIR=C:\OpenSSL-v111-Win64
-  - MSBuild Bitcoinnova.sln /p:CLToolExe=clcache.exe /p:CLToolPath=c:\Python37\Scripts\ /p:Configuration=Release /m
-  - src\Release\cryptotest.exe
+  - apt update && apt upgrade
+  - apt install git build-essential make cmake libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 curl g++-multilib patch g++-mingw-w64-x86-64
+  - git clone https://github.com/phoenixkonsole/transcendence.git
+  - cd transcendence
+  - PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g')
+  - cd depends
+  - make HOST=x86_64-w64-mingw32
+  - cd ..
+  - ./autogen.sh
+  - ./configure --disable-tests --prefix=$PWD/transcendence/depends/x86_64-w64-mingw32
+  - make
 
 after_build:
   - clcache -s
   - if not defined APPVEYOR_REPO_TAG_NAME (set APPVEYOR_REPO_TAG_NAME=%APPVEYOR_REPO_COMMIT%)
-  - cd src\Release
+  - cd src\qt
   - mkdir transcendence-%APPVEYOR_REPO_TAG_NAME%
   - copy *.exe transcendence-%APPVEYOR_REPO_TAG_NAME%
   - copy ..\..\..\LICENSE bitcoinnova-%APPVEYOR_REPO_TAG_NAME%
