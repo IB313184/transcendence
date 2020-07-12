@@ -1,9 +1,6 @@
 image:
   - Ubuntu
  
-before_build:
-  - clcache -s
-
 build_script:
   - apt update && apt upgrade
   - apt install git build-essential make cmake libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 curl g++-multilib patch g++-mingw-w64-x86-64
