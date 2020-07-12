@@ -1,5 +1,4 @@
-os: Ubuntu 18.04
-image: Ubuntu1804
+os: Ubuntu
 
 cache: c:\users\appveyor\clcache
 
