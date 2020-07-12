@@ -9,14 +9,14 @@ build_script:
   - sudo PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g')
   - sudo cd depends
   - sudo make HOST=x86_64-w64-mingw32
-  - sudo cd ..
+  - cd ..
   - sudo ./autogen.sh
   - sudo ./configure --disable-tests --prefix=$PWD/transcendence/depends/x86_64-w64-mingw32
   - sudo make
 
 after_build:
   - if not defined APPVEYOR_REPO_TAG_NAME (set APPVEYOR_REPO_TAG_NAME=%APPVEYOR_REPO_COMMIT%)
-  - sudo cd src\qt
+  - cd src\qt
   - sudo mkdir transcendence-%APPVEYOR_REPO_TAG_NAME%
   - sudo cp *.exe transcendence-%APPVEYOR_REPO_TAG_NAME%
   - sudo cp ..\..\..\LICENSE bitcoinnova-%APPVEYOR_REPO_TAG_NAME%
