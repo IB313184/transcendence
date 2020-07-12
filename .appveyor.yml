@@ -2,7 +2,7 @@ image:
   - Ubuntu
  
 build_script:
-  - sudo apt update && apt upgrade
+  - sudo apt update
   - sudo apt install git build-essential make cmake libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 curl g++-multilib patch g++-mingw-w64-x86-64
   - sudo git clone https://github.com/phoenixkonsole/transcendence.git
   - sudo cd transcendence
