@@ -5,9 +5,9 @@ build_script:
   - sudo apt update
   - sudo apt install git build-essential make cmake libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 curl g++-multilib patch g++-mingw-w64-x86-64 -y
   - sudo git clone https://github.com/phoenixkonsole/transcendence.git
-  - sudo cd transcendence
+  - cd transcendence
   - sudo PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g')
-  - sudo cd depends
+  - cd depends
   - sudo make HOST=x86_64-w64-mingw32
   - cd ..
   - sudo ./autogen.sh
