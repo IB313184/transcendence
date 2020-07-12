@@ -7,6 +7,7 @@ build_script:
   - sudo apt install git build-essential make cmake libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 curl g++-multilib patch g++-mingw-w64-x86-64 libdb4.8-dev libdb4.8++-dev libboost-all-dev libssl-dev libevent-dev libgmp-dev qt5-default qttools5-dev libqt5svg5-dev libqt5x11extras5-dev -y
   - sudo git clone https://github.com/phoenixkonsole/transcendence.git
   - cd transcendence
+  - sudo update-alternatives --config x86_64-w64-mingw32-g++
   - PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g')
   - cd depends
   - sudo make HOST=x86_64-w64-mingw32
