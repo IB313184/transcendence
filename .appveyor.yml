@@ -2,27 +2,26 @@ image:
   - Ubuntu
  
 build_script:
-  - apt update && apt upgrade
-  - apt install git build-essential make cmake libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 curl g++-multilib patch g++-mingw-w64-x86-64
-  - git clone https://github.com/phoenixkonsole/transcendence.git
-  - cd transcendence
-  - PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g')
-  - cd depends
-  - make HOST=x86_64-w64-mingw32
-  - cd ..
-  - ./autogen.sh
-  - ./configure --disable-tests --prefix=$PWD/transcendence/depends/x86_64-w64-mingw32
-  - make
+  - sudo apt update && apt upgrade
+  - sudo apt install git build-essential make cmake libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 curl g++-multilib patch g++-mingw-w64-x86-64
+  - sudo git clone https://github.com/phoenixkonsole/transcendence.git
+  - sudo cd transcendence
+  - sudo PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g')
+  - sudo cd depends
+  - sudo make HOST=x86_64-w64-mingw32
+  - sudo cd ..
+  - sudo ./autogen.sh
+  - sudo ./configure --disable-tests --prefix=$PWD/transcendence/depends/x86_64-w64-mingw32
+  - sudo make
 
 after_build:
-  - clcache -s
   - if not defined APPVEYOR_REPO_TAG_NAME (set APPVEYOR_REPO_TAG_NAME=%APPVEYOR_REPO_COMMIT%)
-  - cd src\qt
-  - mkdir transcendence-%APPVEYOR_REPO_TAG_NAME%
-  - copy *.exe transcendence-%APPVEYOR_REPO_TAG_NAME%
-  - copy ..\..\..\LICENSE bitcoinnova-%APPVEYOR_REPO_TAG_NAME%
-  - 7z a transcendence-%APPVEYOR_REPO_TAG_NAME%-windows.zip bitcoinnova-%APPVEYOR_REPO_TAG_NAME%
-  - copy transcendence-%APPVEYOR_REPO_TAG_NAME%-windows.zip ..\..\..\
+  - sudo cd src\qt
+  - sudo mkdir transcendence-%APPVEYOR_REPO_TAG_NAME%
+  - sudo cp *.exe transcendence-%APPVEYOR_REPO_TAG_NAME%
+  - sudo cp ..\..\..\LICENSE bitcoinnova-%APPVEYOR_REPO_TAG_NAME%
+  - sudo 7z a transcendence-%APPVEYOR_REPO_TAG_NAME%-windows.zip bitcoinnova-%APPVEYOR_REPO_TAG_NAME%
+  - sudo cp transcendence-%APPVEYOR_REPO_TAG_NAME%-windows.zip ..\..\..\
 
 artifacts:
   - path: Transcendence-$(APPVEYOR_REPO_TAG_NAME)-windows.zip
