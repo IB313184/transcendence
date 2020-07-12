@@ -1,5 +1,6 @@
-os: Ubuntu
-
+image:
+  - Ubuntu
+  
 cache: c:\users\appveyor\clcache
 
 before_build:
