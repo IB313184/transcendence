@@ -4,7 +4,7 @@ image:
 build_script:
   - sudo add-apt-repository ppa:bitcoin/bitcoin -y
   - sudo apt update
-  - sudo apt install git build-essential make cmake libtool bsdmainutils autotools-dev autoconf pkg-config automake python3 curl g++-multilib patch g++-mingw-w64-x86-64 -y
+  - sudo apt install build-essential make cmake libtool autotools-dev autoconf automake pkg-config python3 bsdmainutils curl g++-multilib patch g++-mingw-w64-x86-64 git libdb4.8-dev libdb4.8++-dev libboost-all-dev libssl-dev libevent-dev libgmp-dev qt5-default qttools5-dev libqt5svg5-dev libqt5x11extras5-dev -y
   - sudo git clone https://github.com/phoenixkonsole/transcendence.git
   - cd transcendence
   - echo "1"| sudo update-alternatives --config x86_64-w64-mingw32-g++
