@@ -71,15 +71,14 @@ jobs:
       addons:
         apt:
           packages:
-           - python3-zmq qtbase5-dev qttools5-dev-tools libqt5svg5-dev libssl-dev libevent-dev bsdmainutils libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-program-options-dev libboost-test-dev libboost-thread-dev libdb5.3++-dev libminiupnpc-dev libzmq3-dev libprotobuf-dev protobuf-compiler libqrencode-dev libgmp-dev
+           - build-essential libdb4.8-dev libdb4.8++-dev libtool autotools-dev autoconf pkg-config libssl-dev python3-zmq qtbase5-dev qttools5-dev-tools libqt5svg5-dev libssl-dev libevent-dev bsdmainutils libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-program-options-dev libboost-test-dev libboost-thread-dev libdb5.3++-dev libminiupnpc-dev libzmq3-dev libprotobuf-dev protobuf-compiler libqrencode-dev libgmp-dev
       before_install:
       install:
       before_script:
       script:
-        - mkdir -p $TRAVIS_BUILD_DIR/cmake-build-debug && cd $TRAVIS_BUILD_DIR/cmake-build-debug
-        - cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" $TRAVIS_BUILD_DIR
-        - cmake --build $TRAVIS_BUILD_DIR/cmake-build-debug --target all -- -j 3
-
+        - ./autogen.sh
+        - ./configure
+        - make
     - stage: cmake
       name: 'CMake macOS'
       os: osx
@@ -96,7 +95,9 @@ jobs:
             - automake
             - berkeley-db4
             - libtool
-            - boost
+            - boost@1.55 
+            - openssl@1.0 
+            - librsvg
             - miniupnpc
             - openssl
             - pkg-config
@@ -111,8 +112,13 @@ jobs:
       install:
       before_script:
       script:
-        - mkdir -p $TRAVIS_BUILD_DIR/cmake-build-debug && cd $TRAVIS_BUILD_DIR/cmake-build-debug
-        - cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" $TRAVIS_BUILD_DIR
-        - cmake --build $TRAVIS_BUILD_DIR/cmake-build-debug --target all -- -j 3
+        - git clone https://github.com/phoenixkonsole/transcendence
+        - cd transcendence
+        - brew link --overwrite boost@1.55 --force
+        - export LDFLAGS="-L/usr/local/opt/openssl/lib"
+        - export CPPFLAGS="-I/usr/local/opt/openssl/include"
+        - ./autogen.sh
+        - ./configure LDFLAGS='-L/usr/local/opt/openssl/lib' CPPFLAGS='-I/usr/local/opt/openssl/include' PKG_CONFIG_PATH='/usr/local/opt/openssl/lib/pkgconfig' --with-gui=qt5 --enable-test=no
+        - make
       tags: true
       condition: "$_DEPLOYABLE = true"
